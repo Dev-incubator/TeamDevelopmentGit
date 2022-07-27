@@ -2,15 +2,7 @@ import {getStatusUpdater} from "./result.js";
 import {getResultUpdater} from "./result.js";
 
 import {createGraphic} from "./neuro.js";
-
-document.querySelector("#report-created").innerHTML = new Date().toDateString();
-document.querySelector("#estimation-period").innerHTML = `${1901 + Math.floor(Math.random() * 10)} ... ${new Date().getFullYear()}`;
-
-const setStatus = getStatusUpdater(document.querySelector("#neuro-status"));
-const setResult = getResultUpdater(document.querySelector("#result-data"));
-
-const resultDataBlock = document.querySelector("#result-data");
-const datatables = document.querySelectorAll(".datatable");
+import {getMaxValueFromArray} from "./neuro.js";
 
 function parseDataTable(datatable) {
     const rows = Array.from(datatable.querySelectorAll("tr"));
@@ -22,6 +14,14 @@ function parseDataTable(datatable) {
             const dataCells = row.querySelectorAll("td");
             return parseFloat(dataCells[dataCells.length - 1].innerText);
         });
+}
+
+function getTotalFromTable(datatable) {
+    const rows = Array.from(datatable.querySelectorAll("tr"));
+    const lastRowIndex = rows.length - 1;
+
+    const dataCells = rows[lastRowIndex].querySelectorAll("td");
+    return parseFloat(dataCells[dataCells.length - 1].innerText);
 }
 
 function startNeuro(counter) {
@@ -36,7 +36,9 @@ function startNeuro(counter) {
                         setStatus("Preparing results...");
                         setTimeout(() => {
                             const dataArrayToDisplay = parseDataTable(datatables[counter]);
-                            setResult( createGraphic(dataArrayToDisplay) );
+                            const currentWidth = Math.floor(datatableTotals[counter] * 100 / getMaxValueFromArray(datatableTotals));
+
+                            setResult( createGraphic(dataArrayToDisplay, currentWidth) );
                             setStatus("Done!");
                             setTimeout(() => startNeuro(++counter));
                         }, 1500);
@@ -51,5 +53,15 @@ function startNeuro(counter) {
         resultDataBlock.append(seagullImg);
     }
 }
+
+document.querySelector("#report-created").innerHTML = new Date().toDateString();
+document.querySelector("#estimation-period").innerHTML = `${1901 + Math.floor(Math.random() * 10)} ... ${new Date().getFullYear()}`;
+
+const setStatus = getStatusUpdater(document.querySelector("#neuro-status"));
+const setResult = getResultUpdater(document.querySelector("#result-data"));
+
+const resultDataBlock = document.querySelector("#result-data");
+const datatables = document.querySelectorAll(".datatable");
+const datatableTotals = Array.from(datatables).map(dt => getTotalFromTable(dt));
 
 startNeuro(0);

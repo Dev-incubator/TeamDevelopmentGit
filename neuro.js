@@ -1,6 +1,6 @@
 export {createGraphic};
 
-function getMaxValueFromArray(array) {
+export function getMaxValueFromArray(array) {
     let max = array[0];
 
     for (let i = 1; i < array.length; i++) {
@@ -12,11 +12,12 @@ function getMaxValueFromArray(array) {
     return max;
 }
 
-function createGraphic(values) {
+function createGraphic(values, maxWidth) {
     const wrapper = document.createElement("div");
     const max = getMaxValueFromArray(values);
 
     wrapper.classList.add("graph");
+    wrapper.setAttribute("style", `width: ${maxWidth}%;`);
 
     values.forEach(val => {
         const graphColumn = document.createElement("div");
