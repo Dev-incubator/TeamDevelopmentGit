@@ -62,3 +62,17 @@ table.datatable tr:first-child td {
 table.datatable tr:last-child td {
     font-weight: bold;
 }
+
+.graph {
+    padding: 4px;
+}
+
+.app-version {
+    padding: 5px;
+    text-align: center;
+}
+
+#neuro-status {
+    text-align: center;
+    padding: 4px;
+}
