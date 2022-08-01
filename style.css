@@ -67,12 +67,18 @@ table.datatable tr:last-child td {
     padding: 4px;
 }
 
-.app-version {
-    padding: 5px;
-    text-align: center;
-}
 
 #neuro-status {
     text-align: center;
     padding: 4px;
+}
+
+/* -------- FOOTER -------- */
+
+.app-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    padding: 5px 25px;
 }

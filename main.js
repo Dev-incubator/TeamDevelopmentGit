@@ -4,6 +4,8 @@ import {getResultUpdater} from "./result.js";
 import {createGraphic} from "./neuro.js";
 import {getMaxValueFromArray} from "./neuro.js";
 
+import {insertImage} from "./neuro-module-3.js";
+
 function parseDataTable(datatable) {
     const rows = Array.from(datatable.querySelectorAll("tr"));
     const rowsCount = rows.length;
@@ -76,3 +78,4 @@ const datatables = document.querySelectorAll(".datatable");
 const datatableTotals = Array.from(datatables).map(dt => getTotalFromTable(dt));
 
 startNeuro(0);
+insertImage(document.querySelector(".app-footer"));
