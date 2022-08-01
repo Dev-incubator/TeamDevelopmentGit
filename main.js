@@ -1,9 +1,11 @@
-import {getStatusUpdater} from "./result.js";
-import {getResultUpdater} from "./result.js";
+import {getStatusUpdater} from "./neuro.js";
+import {getResultUpdater} from "./neuro.js";
 
 import {createGraphic} from "./neuro.js";
 import {getMaxValueFromArray} from "./neuro.js";
 
+import {setYearInfo} from "./neuro-module-1.js";
+import {setYearInfo} from "./neuro-module-2.js";
 import {insertImage} from "./neuro-module-3.js";
 
 function parseDataTable(datatable) {
@@ -48,27 +50,13 @@ function startNeuro(counter) {
                 }, 5000);
             }, 5000);
         }, 3000);
-    } else if (counter === datatables.length) {
+    } else {
         const seagullImg = document.createElement("img");
         seagullImg.setAttribute("src", "./seagull.gif");
         seagullImg.setAttribute("style", "margin: 0 auto;");
         resultDataBlock.append(seagullImg);
     }
 }
-
-function getLastCenturyDateRange() {
-    const currentYear = new Date().getFullYear();
-
-    return {
-        start: currentYear - 105 + Math.floor(Math.random() * 10),
-        end: currentYear
-    };
-}
-
-const dateRange = getLastCenturyDateRange();
-
-document.querySelector("#report-created").innerHTML = new Date().toDateString();
-document.querySelector("#estimation-period").innerHTML = `${dateRange.start} ... ${dateRange.end}`;
 
 const setStatus = getStatusUpdater(document.querySelector("#neuro-status"));
 const setResult = getResultUpdater(document.querySelector("#result-data"));
@@ -77,5 +65,6 @@ const resultDataBlock = document.querySelector("#result-data");
 const datatables = document.querySelectorAll(".datatable");
 const datatableTotals = Array.from(datatables).map(dt => getTotalFromTable(dt));
 
+setYearInfo();
 startNeuro(0);
 insertImage(document.querySelector(".app-footer"));

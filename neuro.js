@@ -12,6 +12,14 @@ export function getMaxValueFromArray(array) {
     return max;
 }
 
+export function getStatusUpdater(statusElement) {
+    return (status) => { statusElement.innerHTML = `NeuroNet Status: ${status}` };
+}
+
+export function getResultUpdater(resultElement) {
+    return (result) => { resultElement.prepend(result) };
+}
+
 function createGraphic(values, maxWidth) {
     const wrapper = document.createElement("div");
     const max = getMaxValueFromArray(values);
