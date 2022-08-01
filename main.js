@@ -54,8 +54,19 @@ function startNeuro(counter) {
     }
 }
 
+function getLastCenturyDateRange() {
+    const currentYear = new Date().getFullYear();
+
+    return {
+        start: currentYear - 105 + Math.floor(Math.random() * 10),
+        end: currentYear
+    };
+}
+
+const dateRange = getLastCenturyDateRange();
+
 document.querySelector("#report-created").innerHTML = new Date().toDateString();
-document.querySelector("#estimation-period").innerHTML = `${1901 + Math.floor(Math.random() * 10)} ... ${new Date().getFullYear()}`;
+document.querySelector("#estimation-period").innerHTML = `${dateRange.start} ... ${dateRange.end}`;
 
 const setStatus = getStatusUpdater(document.querySelector("#neuro-status"));
 const setResult = getResultUpdater(document.querySelector("#result-data"));
