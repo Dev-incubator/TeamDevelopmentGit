@@ -74,14 +74,14 @@ function getMaxValueFromArray(array) {
 
 function createGraphic(values, maxWidth) {
     const wrapper = document.createElement("div");
-    const max = getMaxValueFromArray(values);
+    const max = getMaxValueFromArray(values.map(v => v.value));
 
     wrapper.classList.add("graph");
     wrapper.setAttribute("style", `width: ${maxWidth}%;`);
 
     values.forEach(val => {
         const graphColumn = document.createElement("div");
-        let width = Math.floor((val * 100) / max);
+        let width = Math.floor((val.value * 100) / max);
         let color = "red";
 
         if (width < 40) {
@@ -91,7 +91,18 @@ function createGraphic(values, maxWidth) {
         }
         
         graphColumn.classList.add("graph-column");
-        graphColumn.setAttribute("style", `background-color: ${color}; height: 20px; margin-top: 4px; width: ${width}%;`);
+
+        graphColumn.style.display = "flex";
+        graphColumn.style.justifyContent = "space-between";
+        graphColumn.style.marginTop = "4px";
+        graphColumn.style.paddingLeft = "5px";
+        graphColumn.style.paddingRight = "5px";
+        graphColumn.style.minHeight = "20px";
+        graphColumn.style.width = `${width}%`;
+        graphColumn.style.textAlign = "left";
+        graphColumn.style.backgroundColor = color;
+        graphColumn.innerHTML = `<span>${val.indicator}</span><span>${val.value}</span>`;
+        // graphColumn.setAttribute("style", `background-color: ${color}; height: 20px; margin-top: 4px; width: ${width}%;`);
 
         wrapper.prepend(graphColumn);
     });
@@ -107,6 +118,13 @@ function parseDataTable(datatable) {
         .filter((el, i) => i !== 0 && i !== rowsCount - 1)
         .map(row => {
             const dataCells = row.querySelectorAll("td");
-            return parseFloat(dataCells[dataCells.length - 1].innerText);
+            const firstCell = dataCells[0];
+            const lastCell = dataCells[dataCells.length - 1];
+
+            return {
+                indicator: firstCell.innerText,
+                value: parseInt(lastCell.innerText)
+            }
+            //return parseFloat(dataCells[dataCells.length - 1].innerText);
         });
 }
