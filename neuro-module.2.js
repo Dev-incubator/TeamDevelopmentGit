@@ -20,13 +20,13 @@ export class Neuro {
     startNeuro(counter) {
         if (counter < datatables.length) {
             setTimeout(() => {
-                this.setStatus("Preparing...");
+                this.setStatus(`Preparing to parse table ${counter + 1}...`);
                 setTimeout(() => {
-                    this.setStatus("Parsing the table...");
+                    this.setStatus(`Parsing the table ${counter + 1}...`);
                     setTimeout(() => {
-                        this.setStatus("Calculating...");
+                        this.setStatus("Calculating results...");
                         setTimeout(() => {
-                            this.setStatus("Preparing results...");
+                            this.setStatus("Creating a graphic...");
                             setTimeout(() => {
                                 const dataArrayToDisplay = parseDataTable(datatables[counter]);
                                 const currentWidth = Math.floor(datatableTotals[counter] * 100 / getMaxValueFromArray(datatableTotals));
@@ -102,7 +102,6 @@ function createGraphic(values, maxWidth) {
         graphColumn.style.textAlign = "left";
         graphColumn.style.backgroundColor = color;
         graphColumn.innerHTML = `<span>${val.indicator}</span><span>${val.value}</span>`;
-        // graphColumn.setAttribute("style", `background-color: ${color}; height: 20px; margin-top: 4px; width: ${width}%;`);
 
         wrapper.prepend(graphColumn);
     });
@@ -125,6 +124,5 @@ function parseDataTable(datatable) {
                 indicator: firstCell.innerText,
                 value: parseInt(lastCell.innerText)
             }
-            //return parseFloat(dataCells[dataCells.length - 1].innerText);
         });
 }
