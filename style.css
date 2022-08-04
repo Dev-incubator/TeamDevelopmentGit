@@ -64,10 +64,15 @@ table.datatable tr:last-child td {
     font-weight: bold;
 }
 
+/* -------- graph -------- */
+
 .graph {
     padding: 4px;
 }
 
+.graph-column {
+    align-items: center;
+}
 
 #neuro-status {
     text-align: center;
